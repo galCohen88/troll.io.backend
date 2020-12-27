@@ -1,0 +1,26 @@
+{
+  "name": "troll.io.backend",
+  "version": "1.0.0",
+  "description": "A trolling app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/galCohen88/troll.io.backend.git"
+  },
+  "keywords": [
+    "troll"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/galCohen88/troll.io.backend/issues"
+  },
+  "homepage": "https://github.com/galCohen88/troll.io.backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^3.0.4"
+  }
+}
