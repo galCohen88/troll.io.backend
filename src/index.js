@@ -2,8 +2,6 @@ const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-const loginRouter = require('./api/login');
-
 
 const PORT = 80 || process.env.PORT;
 
