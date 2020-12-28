@@ -1,11 +1,13 @@
 const socketCollection = require('../SocketCollection');
 
-function handleTroll({
-    destination,
-    media,
-    email,
-    sms
-}) {
+function handleTroll(payload) {
+    const {
+        destination,
+        media,
+        email,
+        sms
+    } = JSON.parse(payload);
+
     if (media) {
         if (!socketCollection.isConnected(destination)) {
             // TODO save for later when user connects
