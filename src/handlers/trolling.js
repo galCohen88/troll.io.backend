@@ -10,7 +10,7 @@ function handleTroll({
         if (!socketCollection.isConnected(destination)) {
             // TODO save for later when user connects
         } else {
-            socketCollection.sendMessage(destination, { media });
+            socketCollection.sendMessage(destination, 'troll-media', { media });
         }
     }
 
