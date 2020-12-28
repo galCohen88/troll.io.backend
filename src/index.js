@@ -1,4 +1,4 @@
-import users from './users.json'
+const fs = require('fs');
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
@@ -7,6 +7,7 @@ const io = require('socket.io')(http, {
 const cors = require('cors');
 
 const registerHandlers = require('./events');
+var users = require('./users.json')
 
 
 const PORT = process.env.PORT || 80;
