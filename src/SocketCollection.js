@@ -1,15 +1,19 @@
 
 class SocketCollection {
     constructor() {
-        this._socketUserMap = new Map();
+        this._userSocketMap = new Map();
     }
 
     registerUser(username, socket) {
-        this._socketUserMap.set(username, socket);
+        this._userSocketMap.set(username, socket);
+    }
+
+    isConnected(username) {
+        return this._userSocketMap.has(username);
     }
 
     getSocket(username) {
-        return this._socketUserMap.get(username);
+        return this._userSocketMap.get(username);
     }
 
     sendMessage(reveiver, type, message) {
@@ -22,7 +26,7 @@ class SocketCollection {
     }
 
     remove(username) {
-        this._socketUserMap.delete(username);
+        this._userSocketMap.delete(username);
     }
 }
 
