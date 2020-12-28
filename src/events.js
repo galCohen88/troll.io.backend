@@ -8,7 +8,7 @@ function registerHandlers(socket) {
         SocketCollection.registerUser(username, socket);
         console.log(`${username} is now connected`);
     });
-    socket.on('logoff', ({ username }) => {
+    socket.on('logoff', payload => {
         const { username } = JSON.parse(payload);
 
         SocketCollection.remove(username);
