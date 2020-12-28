@@ -12,6 +12,15 @@ class SocketCollection {
         return this._socketUserMap.get(username);
     }
 
+    sendMessage(reveiver, type, message) {
+        const socket = this.getSocket(reveiver);
+        if (!socket) {
+            return;
+        }
+
+        socket.emit(type, message);
+    }
+
     remove(username) {
         this._socketUserMap.delete(username);
     }
