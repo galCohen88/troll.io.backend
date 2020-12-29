@@ -39,6 +39,9 @@ app.post('/login', bodyParser, wrap(async (_req, res, next) => {
     res.send(response)
 }));
 
+app.get('/scores', wrap(async (_req, res, next) => {
+    res.send({ scores: await scores.getAll() });
+}));
 
 io.on('connection', socket => {
     console.log('a user has connected');

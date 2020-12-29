@@ -70,7 +70,7 @@ async function migrate() {
 
     let values = users.map(user => { return `('${user}', 0, 0)` });
     await migration(2, "INSERT INTO scores VALUES " + values.join(', '));
-    
+
     console.log("Finished DB migration");
 }
 
