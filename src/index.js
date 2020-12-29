@@ -2,6 +2,8 @@ const fs = require('fs');
 const app = require('express')();
 const http = require('http').createServer(app);
 const bodyParser = require('body-parser').json();
+const Database = require('./Database');
+const scores = require('./scores');
 
 const io = require('socket.io')(http, {
     cors: { origin: '*' },
@@ -9,7 +11,7 @@ const io = require('socket.io')(http, {
 const cors = require('cors');
 
 const registerHandlers = require('./events');
-var users = require('./users.json')
+var users = require('./users.json');
 
 
 const PORT = process.env.PORT || 80;
@@ -20,15 +22,22 @@ app.get('/isAlive', (_req, res) => {
     res.send("Alive and kickin'!!")
 });
 
-app.post('/login', bodyParser, (_req, res) => {
-    const user = _req.body["user"]
+const wrap = fn => (...args) => fn(...args).catch(args[2]);
+
+app.post('/login', bodyParser, wrap(async (_req, res, next) => {
+    const user = _req.body["user"];
     console.log(`user ${user} trying to log in`);
-    let loggedIn = false;
-    if (users.includes(user)){
-        loggedIn = true;
+
+    const response = {};
+
+    response.loggedIn = false;
+    if (users.includes(user)) {
+        response.loggedIn = true;
+        response.scores = await scores.getAll();
     }
-    res.send({"loggedIn": loggedIn})
-});
+
+    res.send(response)
+}));
 
 
 io.on('connection', socket => {
@@ -38,6 +47,11 @@ io.on('connection', socket => {
     registerHandlers(socket);
 });
 
-http.listen(PORT, () => {
-    console.log(`Troll.io server listening on port ${PORT}`);
+
+Database.migrate().then(() => {
+    http.listen(PORT, () => {
+        console.log(`Troll.io server listening on port ${PORT}`);
+    });
+}).catch(err => {
+    console.error(err);
 });
