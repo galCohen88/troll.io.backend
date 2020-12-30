@@ -1,22 +1,18 @@
 const PromiseDB = require('./Database.js').PromiseDB;
 
 
-async function newUser(email) {
-    let db = new PromiseDB();
-    let row = await db.get('SELECT email FROM scores where email = ?', [email]);
-    if (!row) {
-        await db.run('INSERT VALUES INTO scores (?, 0, 0)', [email]);
-    }
-    db.close();
-}
-
-
 async function getAll() {
     let db = new PromiseDB();
-    let scores = await db.all('SELECT user, sent, received from scores order by sent desc limit 100');
+    let scores = await db.all(`
+        SELECT name, email, sent, received 
+        FROM users 
+        WHERE sent > 0 or received > 0 
+        order by sent desc, name 
+        limit 10
+    `);
     db.close();
     return scores
 }
 
 
-module.exports = { newUser, getAll };
+module.exports = { getAll };

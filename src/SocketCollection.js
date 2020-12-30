@@ -16,8 +16,8 @@ class SocketCollection {
         return this._userSocketMap.get(username);
     }
 
-    sendMessage(reveiver, type, message) {
-        const socket = this.getSocket(reveiver);
+    sendMessage(receiver, type, message) {
+        const socket = this.getSocket(receiver);
         if (!socket) {
             return;
         }

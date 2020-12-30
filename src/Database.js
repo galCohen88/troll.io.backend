@@ -68,8 +68,14 @@ async function migrate() {
     // Run migrations
     await migration(1, "CREATE TABLE scores (user text, sent integer, received integer)");
 
-    let values = users.map(user => { return `('${user}', 0, 0)` });
+    let values = users.map(user => { return `('${user.email}', 0, 0)` });
     await migration(2, "INSERT INTO scores VALUES " + values.join(', '));
+
+    await migration(3, "DROP TABLE scores");
+    await migration(4, "CREATE TABLE users (name text, email text, sent integer, received integer)");
+
+    values = users.map(user => { return `('${user.name}', '${user.email}', 0, 0)` });
+    await migration(5, "INSERT INTO users VALUES " + values.join(', '));
 
     console.log("Finished DB migration");
 }
