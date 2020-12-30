@@ -1,6 +1,7 @@
+const scores = require('../scores');
 const socketCollection = require('../SocketCollection');
 
-function handleTroll(payload) {
+async function handleTroll(payload) {
     const {
         destination,
         media,
@@ -12,6 +13,7 @@ function handleTroll(payload) {
         if (!socketCollection.isConnected(destination)) {
             // TODO save for later when user connects
         } else {
+            scores.update(media.senderEmail, destination);
             socketCollection.sendMessage(destination, 'troll-media', { media });
         }
     }

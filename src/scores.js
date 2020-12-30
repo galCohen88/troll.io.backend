@@ -6,13 +6,17 @@ async function getAll() {
     let scores = await db.all(`
         SELECT name, email, sent, received 
         FROM users 
-        WHERE sent > 0 or received > 0 
-        order by sent desc, name 
-        limit 10
+        order by sent desc, received desc, name
     `);
     db.close();
     return scores
 }
 
+async function update(sender, receiver) {
+    let db = new PromiseDB();
+    await db.run("UPDATE users SET sent = sent + 1 WHERE email = ?", [sender]);
+    await db.run("UPDATE users SET received = received + 1 WHERE email = ?", [receiver]);
+    db.close();
+}
 
-module.exports = { getAll };
+module.exports = { getAll, update };

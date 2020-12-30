@@ -49,8 +49,6 @@ app.get('/users', wrap(async (_req, res, next) => {
     res.send({ users: await scores.getAll() });
 }));
 
-app.get('/users', (_req, res) => res.send(users));
-
 io.on('connection', socket => {
     console.log('a user has connected');
     socket.send('Howdy!');
